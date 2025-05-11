@@ -11,51 +11,55 @@ export class StatisticsService {
     const averageIMC = this.calculateAverageIMC(players);
     const medianHeight = this.calculateMedianHeight(players);
 
-    return {
-      bestCountry,
-      averageIMC,
-      medianHeight,
-    };
+    return { bestCountry, averageIMC, medianHeight };
   }
 
   private calculateCountryStats(players: Player[]): CountryStats {
-    return players.reduce((acc: CountryStats, player) => {
-      const wins = player.last.filter((result) => result === 1).length;
+    const stats: CountryStats = {};
+    for (const player of players) {
+      const code = player.country.code;
+      const wins = player.last.filter(r => r === 1).length;
       const total = player.last.length;
 
-      acc[player.country.code] = acc[player.country.code] || { wins: 0, total: 0 };
-      acc[player.country.code].wins += wins;
-      acc[player.country.code].total += total;
-
-      return acc;
-    }, {});
+      if (!stats[code]) {
+        stats[code] = { wins: 0, total: 0 };
+      }
+      stats[code].wins += wins;
+      stats[code].total += total;
+    }
+    return stats;
   }
 
   private getBestCountry(countryStats: CountryStats): string | null {
-    const bestCountry = Object.entries(countryStats).reduce(
-      (best: { code: string | null; ratio: number }, [code, stats]) => {
-        const ratio = stats.wins / stats.total;
-        return ratio > best.ratio ? { code, ratio } : best;
-      },
-      { code: null, ratio: 0 }
-    );
-
-    return bestCountry.code;
+    let bestCode: string | null = null;
+    let bestRatio = 0;
+    for (const [code, { wins, total }] of Object.entries(countryStats)) {
+      const ratio = total > 0 ? wins / total : 0;
+      if (ratio > bestRatio) {
+        bestRatio = ratio;
+        bestCode = code;
+      }
+    }
+    return bestCode;
   }
 
   private calculateAverageIMC(players: Player[]): number {
-    const totalIMC = players.reduce((sum, player) => {
-      const heightInMeters = player.height / 100;
-      return sum + player.weight / (heightInMeters * heightInMeters);
-    }, 0);
-
-    return totalIMC / players.length;
+    if (players.length === 0) return 0;
+    let sumIMC = 0;
+    for (const player of players) {
+      const heightM = player.height / 100; // conversion cm -> m
+      sumIMC += player.weight / (heightM * heightM);
+    }
+    return sumIMC / players.length;
   }
 
   private calculateMedianHeight(players: Player[]): number {
-    const heights = players.map((player) => player.height).sort((a, b) => a - b);
-    return heights.length % 2 === 0
-      ? (heights[heights.length / 2 - 1] + heights[heights.length / 2]) / 2
-      : heights[Math.floor(heights.length / 2)];
+    const heights = players.map(p => p.height).sort((a, b) => a - b);
+    const len = heights.length;
+    if (len === 0) return 0;
+    const mid = Math.floor(len / 2);
+    return len % 2 === 0
+      ? (heights[mid - 1] + heights[mid]) / 2
+      : heights[mid];
   }
 }

@@ -1,14 +1,14 @@
 {
   "name": "tennis-api",
   "version": "1.0.0",
-  "main": "index.js",
+  "main": "server.js",
   "scripts": {
     "test": "jest --maxWorkers=2",
     "test:watch": "jest --watch",
     "test:coverage": "jest --coverage",
     "start": "node dist/server.js",
     "start:dev": "ts-node src/server.ts",
-    "build": "tsc",
+    "build": "tsc -p tsconfig.build.json",
     "lint": "eslint . --ext .ts",
     "lint:fix": "eslint . --ext .ts --fix",
     "typeorm:run": "typeorm migration:run",
@@ -16,7 +16,8 @@
     "typeorm:generate": "typeorm migration:generate -n",
     "typeorm:create": "typeorm migration:create -n",
     "db:seed": "./scripts/seed.sh",
-    "typeorm": "typeorm"
+    "typeorm": "typeorm",
+    "migration:run": "npm run build && ts-node ./node_modules/typeorm/cli.js migration:run -d dist/infrastructure/database/data-source.js"
   },
   "keywords": [],
   "author": "",
@@ -47,8 +48,8 @@
     "nodemon": "^3.1.10",
     "supertest": "^7.1.0",
     "ts-jest": "^29.3.2",
-    "ts-node": "^10.9.2",
-    "typescript": "^5.8.3",
+    "ts-node": "^10.0.0",
+    "typescript": "^4.0.0",
     "typescript-eslint": "^8.32.0"
   }
 }

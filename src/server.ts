@@ -8,7 +8,6 @@ const PORT = process.env.APP_PORT || 3000;
 
 connectDatabase()
   .then(() => {
-    console.log('Database connected successfully');
     app.listen(PORT, () => {
       console.log(`Server is running on http://localhost:${PORT}`);
     });

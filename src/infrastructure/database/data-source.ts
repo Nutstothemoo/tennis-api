@@ -1,6 +1,7 @@
 import "reflect-metadata";
 import { DataSource } from "typeorm";
 import * as dotenv from "dotenv";
+import path from "path";
 
 dotenv.config();
 
@@ -13,14 +14,22 @@ export const AppDataSource = new DataSource({
   database: process.env.POSTGRES_DB,
   synchronize: false,
   logging: false,
-  entities: ["dist/entities/**/*.js"],
-  migrations: ["dist/migrations/**/*.js"],
-  subscribers: ["dist/subscribers/**/*.js"],
+  entities: [
+    path.join(__dirname, "../../entities/**/*{.js,.ts}")
+  ],
+  migrations: [
+    path.join(__dirname, "../../migrations/**/*{.js,.ts}")
+  ],
+  subscribers: [
+    path.join(__dirname, "../../subscribers/**/*{.js,.ts}")
+  ],
+  migrationsRun: true
 });
 
 export const connectDatabase = async () => {
   try {
     await AppDataSource.initialize();
+    console.log("Database connected successfully");
   } catch (error) {
     console.error('Failed to connect to the database:', error);
 

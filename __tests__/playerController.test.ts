@@ -1,3 +1,25 @@
+jest.mock('../src/services/PlayerService', () => {
+  return {
+    PlayerService: jest.fn().mockImplementation(() => ({
+      getPlayersSortedByRank: jest.fn().mockResolvedValue([
+        { id: 1, rank: 1 },
+        { id: 2, rank: 2 }
+      ]),
+      getPlayerById: jest.fn().mockImplementation((id: number) => {
+        if (id === 1) {
+          return Promise.resolve({ id: 1, firstname: 'Novak', lastname: 'Djokovic', country: { code: 'SRB' } });
+        }
+        return Promise.resolve(null);
+      }),
+      getStatistics: jest.fn().mockResolvedValue({
+        bestCountry: 'SRB',
+        averageIMC: 22.5,
+        medianHeight: 185
+      })
+    }))
+  };
+});
+
 import request from 'supertest'; 
 import app from '../src/app'; 
 
@@ -14,9 +36,10 @@ describe('Player Controller', () => {
 
   describe('GET /api/v1/players/:id', () => {
     it('should return a specific player by ID', async () => {
-      const response = await request(app).get('/api/v1/players/52');
+      // l'entité "Novak Djokovic" insérée en seed a l'ID 1
+      const response = await request(app).get('/api/v1/players/1');
       expect(response.status).toBe(200);
-      expect(response.body).toHaveProperty('id', 52);
+      expect(response.body).toHaveProperty('id', 1);
       expect(response.body).toHaveProperty('firstname');
       expect(response.body).toHaveProperty('lastname');
       expect(response.body).toHaveProperty('country');
