@@ -1,229 +1,219 @@
-# Tennis API
+# 🎾 Tennis API
 
-## Description
-
-Tennis API is a RESTful backend application designed to manage and provide data about tennis players and their statistics. The application is built with **Node.js**, **TypeScript**, **Express**, and **PostgreSQL**, following **SOLID principles** and backend development best practices.
-
----
-
-## Features
-
-1. **Player Management**:
-   - Retrieve a list of players sorted by rank (from best to worst).
-   - Retrieve detailed information about a specific player by their ID.
-
-2. **Global Statistics**:
-   - Calculate and return:
-     - The country with the best win ratio.
-     - The average BMI of all players.
-     - The median height of players.
-
-3. **Database**:
-   - PostgreSQL with entities managed via **TypeORM**.
-
-4. **Testing**:
-   - Comprehensive unit and integration tests using **Jest** and **Supertest**.
+## 📖 Description
+Tennis API is a RESTful backend service to manage and expose data about tennis players and their statistics.  
+Built with **Node.js**, **TypeScript**, **Express** and **PostgreSQL**, it adheres to **SOLID** principles and follows industry best practices for maintainability and scalability.
 
 ---
 
-## Table of Contents
-
-- [Technologies Used](#technologies-used)
-- [Architecture and Best Practices](#architecture-and-best-practices)
-- [Installation](#installation)
-- [API Endpoints](#api-endpoints)
-- [Testing](#testing)
-- [Contributing](#contributing)
-- [License](#license)
-
----
-
-## Technologies Used
-
-- **Node.js** (v20 LTS)
-- **TypeScript**
-- **Express.js**
-- **PostgreSQL**
-- **TypeORM**
-- **Jest** (for unit testing)
-- **Supertest** (for integration testing)
-- **Docker** (for container orchestration)
+## 🚀 Table of Contents
+- [Technologies Used](#technologies-used)  
+- [Architecture & Best Practices](#architecture--best-practices)  
+- [Installation](#installation)  
+- [API Endpoints](#api-endpoints)  
+- [Testing](#testing)  
+- [Contributing](#contributing)  
+- [License](#license)  
+- [Contact](#contact)  
 
 ---
 
-## Architecture and Best Practices
-
-### 1. **SOLID Principles**
-- **Single Responsibility Principle (SRP)**:
-  - Each class or module has a single responsibility. For example, `PlayerService` handles business logic related to players, while `StatisticsService` calculates statistics.
-  
-- **Open/Closed Principle (OCP)**:
-  - The code is designed to be extensible without modifying existing classes. For example, services can be extended to add new features.
-
-### 2. **Separation of Concerns**
-- Controllers (`playerController`) handle HTTP requests and delegate business logic to services (`PlayerService`, `StatisticsService`).
-- Services encapsulate business logic and interact with TypeORM repositories.
-
-### 3. **Testing**
-- Unit tests validate the business logic of services.
-- Integration tests validate RESTful endpoints.
-- Mocks are used to isolate dependencies (e.g., TypeORM repositories).
-
-### 4. **RESTful API**
-- Endpoints follow RESTful conventions with clear and meaningful URIs.
-
-### 5. **TypeScript**
-- TypeScript ensures type safety and reduces runtime errors.
-- Interfaces and types define clear contracts between modules.
+## 🛠️ Technologies Used
+- **Node.js** (v20 LTS)  
+- **TypeScript**  
+- **Express.js**  
+- **PostgreSQL**  
+- **TypeORM**  
+- **Jest** (unit testing)  
+- **Supertest** (integration testing)  
+- **Docker & Docker Compose**  
 
 ---
 
-## Installation
+## 🏗️ Architecture & Best Practices
+1. **Single Responsibility (SRP)**  
+   - Controllers handle HTTP concerns.  
+   - Services contain business logic.  
+   - Repositories deal with data access.
+
+2. **Open/Closed (OCP)**  
+   - Extend functionality via interfaces and dependency injection—avoid modifying existing code.
+
+3. **Dependency Injection**  
+   - Decouple modules by injecting repositories into services.
+
+4. **Error Handling & Logging**  
+   - Centralized error middleware.  
+   - Structured logging with libraries like `winston` or `pino`.
+
+5. **Validation**  
+   - Request DTOs + `class-validator` to enforce data integrity.
+
+6. **Versioning**  
+   - All routes are prefixed with `/api/v1` to enable safe, backwards-compatible changes.
+
+---
+
+## ⚙️ Installation
 
 ### Prerequisites
+- **Node.js** v20+  
+- **Docker** & **Docker Compose**  
+- **Git**
 
-- **Node.js** (v20 LTS)
-- **Docker** and **Docker Compose**
-- **PostgreSQL** (if not using Docker)
-
-### Steps
-
-1. **Clone the repository**:
+### Quick Start
+1. Clone the repo  
    ```bash
-   git clone https://github.com/your-repo/tennis-api.git
+   git clone https://github.com/maximedupin/tennis-api.git
    cd tennis-api
    ```
-
-2. **Install dependencies**:
+2. Install dependencies  
    ```bash
    npm install
    ```
-
-3. **Configure environment variables**:
-   Create a `.env` file at the root of the project and configure the following variables:
-   ```plaintext
+3. Copy & configure `.env`  
+   ```env
    POSTGRES_HOST=localhost
    POSTGRES_PORT=5432
    POSTGRES_USER=postgres
    POSTGRES_PASSWORD=postgres
    POSTGRES_DB=tennis
    ```
-
-4. **Start the application with Docker**:
+4. Launch PostgreSQL and run migrations/seeds  
    ```bash
-   docker-compose up --build
+   docker-compose up -d
+   npm run typeorm migration:run
+   npm run seed:run
    ```
-
-5. **Access the API**:
-   The API will be available at: `http://localhost:3000`.
+5. Start in development mode  
+   ```bash
+   npm run dev
+   ```
+6. Open your browser or API client at  
+   ```
+   http://localhost:3000/api/v1
+   ```
 
 ---
 
-## API Endpoints
+## 📡 API Endpoints
 
-### Base URL: `/api/v1`
+### Base URL 🌐 `/api/v1`
 
-#### 1. **Get all players**
-   - **Endpoint**: `GET /players`
-   - **Description**: Returns a list of players sorted by rank.
-   - **Response**:
-     ```json
-     [
-       {
-         "id": 1,
-         "firstname": "Novak",
-         "lastname": "Djokovic",
-         "rank": 1,
-         "country": {
-           "code": "SRB",
-           "picture": "https://example.com/serbia.png"
-         }
-       }
-     ]
-     ```
-
-#### 2. **Get a player by ID**
-   - **Endpoint**: `GET /players/:id`
-   - **Description**: Returns detailed information about a specific player.
-   - **Response**:
-     ```json
-     {
-       "id": 1,
-       "firstname": "Novak",
-       "lastname": "Djokovic",
-       "rank": 1,
-       "country": {
-         "code": "SRB",
-         "picture": "https://example.com/serbia.png"
-       }
-     }
-     ```
-
-#### 3. **Get player statistics**
-   - **Endpoint**: `GET /players/statistics`
-   - **Description**: Returns global statistics about players.
-   - **Response**:
-     ```json
-     {
-       "bestCountry": "SRB",
-       "averageIMC": 23.5,
-       "medianHeight": 180
-     }
-     ```
+#### 🎾 1. Get All Players
+- **Method**: GET  
+- **Path**: `/players`  
+- **Description**: Fetch all players sorted by rank (best → worst).  
+- **Response**: `200 OK`
+```json
+[
+  {
+    "id": 1,
+    "firstname": "Novak",
+    "lastname": "Djokovic",
+    "rank": 1,
+    "country": {
+      "code": "SRB",
+      "picture": "https://tenisu.latelier.co/resources/Serbia.png"
+    }
+  },
+  …
+]
+```
 
 ---
 
-## Testing
+#### 🔍 2. Get Player By ID
+- **Method**: GET  
+- **Path**: `/players/:id`  
+- **Description**: Retrieve detailed info for a specific player.  
+- **Path Params**: `id` (integer, required)  
+- **Responses**:  
+  - `200 OK` – Player found  
+  - `404 Not Found` – No player with that ID  
+```json
+// 200 OK
+{
+  "id": 1,
+  "firstname": "Novak",
+  "lastname": "Djokovic",
+  "shortname": "N.DJO",
+  "sex": "M",
+  "picture": "https://tenisu.latelier.co/resources/Djokovic.png",
+  "rank": 2,
+  "points": 2542,
+  "weight": 80000,
+  "height": 188,
+  "age": 31,
+  "last": [1,1,1,1,1],
+  "country": {
+    "id": 1,
+    "code": "SRB",
+    "picture": "https://tenisu.latelier.co/resources/Serbia.png"
+  }
+}
 
-### Run Tests
-
-1. **Run all tests**:
-   ```bash
-   npm run test
-   ```
-
-2. **Run tests in watch mode**:
-   ```bash
-   npm run test:watch
-   ```
-
-3. **Generate a coverage report**:
-   ```bash
-   npm run test:coverage
-   ```
-
-### Expected Results
-
-- Unit tests validate the business logic of services.
-- Integration tests validate RESTful endpoints.
-- A coverage report is generated in the `coverage` folder.
-
----
-
-## Contributing
-
-1. Fork the repository.
-2. Create a branch for your feature:
-   ```bash
-   git checkout -b feature-name
-   ```
-3. Make your changes and add tests.
-4. Push your changes:
-   ```bash
-   git push origin feature-name
-   ```
-5. Open a pull request.
+// 404 Not Found
+{ "error": "Player not found" }
+```
 
 ---
 
-## License
+#### 📊 3. Get Global Statistics
+- **Method**: GET  
+- **Path**: `/players/statistics`  
+- **Description**: Compute and return global metrics across all players:  
+  - `bestCountry`: ISO code of the country with the highest win ratio 🏆  
+  - `averageBMI`: average Body Mass Index across players ⚖️  
+  - `medianHeight`: median height in cm 📏  
+- **Response**: `200 OK`
+```json
+{
+  "bestCountry": "SRB",
+  "averageBMI": 23.5,
+  "medianHeight": 180
+}
+```
 
-This project is licensed under the MIT License. See the `LICENSE` file for more details.
+💡 **Pro Tip**: always prefix your calls with `/api/v1` to maintain version safety 😉
 
 ---
 
-## Contact
+## 🧪 Testing
+- **Run all tests**  
+  ```bash
+  npm run test
+  ```
+- **Watch mode**  
+  ```bash
+  npm run test:watch
+  ```
+- **Coverage report**  
+  ```bash
+  npm run test:coverage
+  ```
+- **Tools**: Jest (unit), Supertest (integration), mocks for repositories
 
-For questions or suggestions, contact:
-- **Name**: Maxime Dupin
-- **Email**: maximedupin1992@gmail.com
+---
+
+## 🤝 Contributing
+1. Fork the repo  
+2. Create a feature branch  
+   ```bash
+   git checkout -b feature/your-feature
+   ```
+3. Develop & add tests  
+4. Push and open a PR  
+5. CI will run lint, tests & coverage
+
+---
+
+## 📜 License
+This project is licensed under the **MIT License**. See `LICENSE` for details.
+
+---
+
+## 📬 Contact
+- **Author**: Maxime Dupin  
+- **Email**: maximedupin1992@gmail.com  
+- **GitHub**: [maximedupin](https://github.com/maximedupin)
