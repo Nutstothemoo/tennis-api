@@ -4,6 +4,6 @@ export interface IMatch {
   id: number;
   player1: IPlayer;
   player2: IPlayer;
-  winner: number; // ID du joueur gagnant
+  winner: number; 
   date: Date;
 }
