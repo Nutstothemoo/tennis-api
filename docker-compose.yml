@@ -13,13 +13,16 @@ services:
       - POSTGRES_DB=tennis
     depends_on:
       - postgres
+    env_file:
+      - .env
     command: sh -c "
+      export PGPASSWORD=$POSTGRES_PASSWORD;
       until pg_isready -h $POSTGRES_HOST -p $POSTGRES_PORT; do
         echo 'Waiting for PostgreSQL...';
         sleep 2;
       done;
-      psql -h $POSTGRES_HOST -p $POSTGRES_PORT -U $POSTGRES_USER -d $POSTGRES_DB -f /app/src/migrations/V1__init.sql &&
-      psql -h $POSTGRES_HOST -p $POSTGRES_PORT -U $POSTGRES_USER -d $POSTGRES_DB -f /app/src/migrations/V2__seed_data.sql &&
+      npm run build &&
+      npm run typeorm -- migration:run -d ./dist/infrastructure/database/data-source.js &&
       npm run start:dev"
     volumes:
       - .:/app

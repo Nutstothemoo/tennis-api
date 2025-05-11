@@ -1,8 +1,9 @@
 import { Request, Response, NextFunction } from 'express';
-import { AppDataSource } from '../utils/database';
+
 import { Player } from '../entities/Player';
 import { PlayerService } from '../services/PlayerService';
 import { StatisticsService } from '../services/StatisticsService';
+import { AppDataSource } from '../infrastructure/database/data-source';
 
 const playerRepository = AppDataSource.getRepository(Player);
 const statisticsService = new StatisticsService();

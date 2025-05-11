@@ -2,105 +2,105 @@
 
 ## Description
 
-Tennis API est une application backend RESTful conçue pour gérer et fournir des données sur les joueurs de tennis et leurs statistiques. L'application est construite avec **Node.js**, **TypeScript**, **Express**, et **PostgreSQL**, en suivant les principes **SOLID** et les bonnes pratiques de développement backend.
+Tennis API is a RESTful backend application designed to manage and provide data about tennis players and their statistics. The application is built with **Node.js**, **TypeScript**, **Express**, and **PostgreSQL**, following **SOLID principles** and backend development best practices.
 
 ---
 
-## Fonctionnalités
+## Features
 
-1. **Gestion des joueurs** :
-   - Récupérer une liste de joueurs triée par rang (du meilleur au moins bon).
-   - Récupérer les informations détaillées d’un joueur spécifique grâce à son ID.
+1. **Player Management**:
+   - Retrieve a list of players sorted by rank (from best to worst).
+   - Retrieve detailed information about a specific player by their ID.
 
-2. **Statistiques globales** :
-   - Calculer et retourner :
-     - Le pays avec le meilleur ratio de victoires.
-     - L'IMC moyen de tous les joueurs.
-     - La médiane de la taille des joueurs.
+2. **Global Statistics**:
+   - Calculate and return:
+     - The country with the best win ratio.
+     - The average BMI of all players.
+     - The median height of players.
 
-3. **Base de données** :
-   - PostgreSQL avec des entités gérées via **TypeORM**.
+3. **Database**:
+   - PostgreSQL with entities managed via **TypeORM**.
 
-4. **Tests** :
-   - Tests unitaires et d'intégration complets avec **Jest** et **Supertest**.
+4. **Testing**:
+   - Comprehensive unit and integration tests using **Jest** and **Supertest**.
 
 ---
 
-## Table des matières
+## Table of Contents
 
-- [Technologies utilisées](#technologies-utilisées)
-- [Architecture et bonnes pratiques](#architecture-et-bonnes-pratiques)
+- [Technologies Used](#technologies-used)
+- [Architecture and Best Practices](#architecture-and-best-practices)
 - [Installation](#installation)
-- [Endpoints de l'API](#endpoints-de-lapi)
-- [Tests](#tests)
-- [Contributions](#contributions)
-- [Licence](#licence)
+- [API Endpoints](#api-endpoints)
+- [Testing](#testing)
+- [Contributing](#contributing)
+- [License](#license)
 
 ---
 
-## Technologies utilisées
+## Technologies Used
 
 - **Node.js** (v20 LTS)
 - **TypeScript**
 - **Express.js**
 - **PostgreSQL**
 - **TypeORM**
-- **Jest** (pour les tests unitaires)
-- **Supertest** (pour les tests d'intégration)
-- **Docker** (pour l'orchestration des conteneurs)
+- **Jest** (for unit testing)
+- **Supertest** (for integration testing)
+- **Docker** (for container orchestration)
 
 ---
 
-## Architecture et bonnes pratiques
+## Architecture and Best Practices
 
-### 1. **Respect des principes SOLID**
-- **Responsabilité unique (SRP)** :
-  - Chaque classe ou module a une responsabilité unique. Par exemple, `PlayerService` gère la logique métier liée aux joueurs, tandis que `StatisticsService` calcule les statistiques.
+### 1. **SOLID Principles**
+- **Single Responsibility Principle (SRP)**:
+  - Each class or module has a single responsibility. For example, `PlayerService` handles business logic related to players, while `StatisticsService` calculates statistics.
   
-- **Ouvert/Fermé (OCP)** :
-  - Le code est conçu pour être extensible sans modifier les classes existantes. Par exemple, les services peuvent être étendus pour ajouter de nouvelles fonctionnalités.
+- **Open/Closed Principle (OCP)**:
+  - The code is designed to be extensible without modifying existing classes. For example, services can be extended to add new features.
 
-### 2. **Séparation des préoccupations**
-- Les contrôleurs (`playerController`) gèrent les requêtes HTTP et délèguent la logique métier aux services (`PlayerService`, `StatisticsService`).
-- Les services encapsulent la logique métier et interagissent avec les dépôts TypeORM.
+### 2. **Separation of Concerns**
+- Controllers (`playerController`) handle HTTP requests and delegate business logic to services (`PlayerService`, `StatisticsService`).
+- Services encapsulate business logic and interact with TypeORM repositories.
 
-### 3. **Tests**
-- Les tests unitaires valident la logique métier des services.
-- Les tests d'intégration valident les endpoints RESTful.
-- Les mocks sont utilisés pour isoler les dépendances (par exemple, les dépôts TypeORM).
+### 3. **Testing**
+- Unit tests validate the business logic of services.
+- Integration tests validate RESTful endpoints.
+- Mocks are used to isolate dependencies (e.g., TypeORM repositories).
 
 ### 4. **RESTful API**
-- Les endpoints suivent les conventions RESTful avec des URI claires et significatives.
+- Endpoints follow RESTful conventions with clear and meaningful URIs.
 
 ### 5. **TypeScript**
-- Utilisation de TypeScript pour garantir la sécurité des types et réduire les erreurs à l'exécution.
-- Les interfaces et les types sont utilisés pour définir des contrats clairs entre les modules.
+- TypeScript ensures type safety and reduces runtime errors.
+- Interfaces and types define clear contracts between modules.
 
 ---
 
 ## Installation
 
-### Prérequis
+### Prerequisites
 
 - **Node.js** (v20 LTS)
-- **Docker** et **Docker Compose**
-- **PostgreSQL** (si vous n'utilisez pas Docker)
+- **Docker** and **Docker Compose**
+- **PostgreSQL** (if not using Docker)
 
-### Étapes
+### Steps
 
-1. **Cloner le dépôt** :
+1. **Clone the repository**:
    ```bash
    git clone https://github.com/your-repo/tennis-api.git
    cd tennis-api
    ```
 
-2. **Installer les dépendances** :
+2. **Install dependencies**:
    ```bash
    npm install
    ```
 
-3. **Configurer les variables d'environnement** :
-   Créez un fichier `.env` à la racine du projet et configurez les variables suivantes :
+3. **Configure environment variables**:
+   Create a `.env` file at the root of the project and configure the following variables:
    ```plaintext
    POSTGRES_HOST=localhost
    POSTGRES_PORT=5432
@@ -109,24 +109,24 @@ Tennis API est une application backend RESTful conçue pour gérer et fournir de
    POSTGRES_DB=tennis
    ```
 
-4. **Démarrer l'application avec Docker** :
+4. **Start the application with Docker**:
    ```bash
    docker-compose up --build
    ```
 
-5. **Accéder à l'API** :
-   L'API sera disponible à l'adresse suivante : `http://localhost:3000`.
+5. **Access the API**:
+   The API will be available at: `http://localhost:3000`.
 
 ---
 
-## Endpoints de l'API
+## API Endpoints
 
-### Base URL : `/api/v1`
+### Base URL: `/api/v1`
 
-#### 1. **Récupérer tous les joueurs**
-   - **Endpoint** : `GET /players`
-   - **Description** : Retourne une liste de joueurs triée par rang.
-   - **Réponse** :
+#### 1. **Get all players**
+   - **Endpoint**: `GET /players`
+   - **Description**: Returns a list of players sorted by rank.
+   - **Response**:
      ```json
      [
        {
@@ -142,10 +142,10 @@ Tennis API est une application backend RESTful conçue pour gérer et fournir de
      ]
      ```
 
-#### 2. **Récupérer un joueur par ID**
-   - **Endpoint** : `GET /players/:id`
-   - **Description** : Retourne les informations d’un joueur spécifique.
-   - **Réponse** :
+#### 2. **Get a player by ID**
+   - **Endpoint**: `GET /players/:id`
+   - **Description**: Returns detailed information about a specific player.
+   - **Response**:
      ```json
      {
        "id": 1,
@@ -159,10 +159,10 @@ Tennis API est une application backend RESTful conçue pour gérer et fournir de
      }
      ```
 
-#### 3. **Récupérer les statistiques des joueurs**
-   - **Endpoint** : `GET /players/statistics`
-   - **Description** : Retourne les statistiques globales des joueurs.
-   - **Réponse** :
+#### 3. **Get player statistics**
+   - **Endpoint**: `GET /players/statistics`
+   - **Description**: Returns global statistics about players.
+   - **Response**:
      ```json
      {
        "bestCountry": "SRB",
@@ -173,57 +173,57 @@ Tennis API est une application backend RESTful conçue pour gérer et fournir de
 
 ---
 
-## Tests
+## Testing
 
-### Lancer les tests
+### Run Tests
 
-1. **Exécuter tous les tests** :
+1. **Run all tests**:
    ```bash
    npm run test
    ```
 
-2. **Exécuter les tests en mode surveillance** :
+2. **Run tests in watch mode**:
    ```bash
    npm run test:watch
    ```
 
-3. **Générer un rapport de couverture** :
+3. **Generate a coverage report**:
    ```bash
    npm run test:coverage
    ```
 
-### Résultats attendus
+### Expected Results
 
-- Les tests unitaires valident la logique métier des services.
-- Les tests d'intégration valident les endpoints RESTful.
-- Un rapport de couverture est généré dans le dossier `coverage`.
+- Unit tests validate the business logic of services.
+- Integration tests validate RESTful endpoints.
+- A coverage report is generated in the `coverage` folder.
 
 ---
 
-## Contributions
+## Contributing
 
-1. Forkez le dépôt.
-2. Créez une branche pour votre fonctionnalité :
+1. Fork the repository.
+2. Create a branch for your feature:
    ```bash
    git checkout -b feature-name
    ```
-3. Faites vos modifications et ajoutez des tests.
-4. Poussez vos modifications :
+3. Make your changes and add tests.
+4. Push your changes:
    ```bash
    git push origin feature-name
    ```
-5. Ouvrez une pull request.
+5. Open a pull request.
 
 ---
 
-## Licence
+## License
 
-Ce projet est sous licence MIT. Consultez le fichier `LICENSE` pour plus d'informations.
+This project is licensed under the MIT License. See the `LICENSE` file for more details.
 
 ---
 
 ## Contact
 
-Pour toute question ou suggestion, contactez :
-- **Nom** : Maxime Dupin
-- **Email** : maxime.dupin@example.com
+For questions or suggestions, contact:
+- **Name**: Maxime Dupin
+- **Email**: maximedupin1992@gmail.com
