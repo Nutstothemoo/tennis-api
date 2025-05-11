@@ -9,7 +9,7 @@ Built with **Node.js**, **TypeScript**, **Express** and **PostgreSQL**, it adher
 ## 🚀 Table of Contents
 - [Technologies Used](#technologies-used)  
 - [Architecture & Best Practices](#architecture--best-practices)  
-- [Installation](#installation)  
+- [Quick Fix to Launch the Project](#quick-fix-to-launch-the-project)  
 - [API Endpoints](#api-endpoints)  
 - [Testing](#testing)  
 - [Contributing](#contributing)  
@@ -50,52 +50,23 @@ Built with **Node.js**, **TypeScript**, **Express** and **PostgreSQL**, it adher
 
 ---
 
-## ⚙️ Installation
+## ⚙️ Quick Fix to Launch the Project in local
 
-### Prerequisites
-- **Node.js** v20+  
-- **Docker** & **Docker Compose**  
-- **Git**
+Prerequisites: Docker Engine & Docker Compose v2.
 
-### Quick Start
-1. Clone the repo  
+1. Install Docker  
+   - Windows/macOS: download and install **Docker Desktop** from https://www.docker.com/get-started  
+   - Linux: follow the official guide at https://docs.docker.com/engine/install/
+
+2. Verify Docker Compose installation  
    ```bash
-   git clone https://github.com/maximedupin/tennis-api.git
-   cd tennis-api
-   ```
-2. Install dependencies  
-   ```bash
-   npm install
-   ```
-3. Copy & configure `.env`  
-   ```env
-   POSTGRES_HOST=localhost
-   POSTGRES_PORT=5432
-   POSTGRES_USER=postgres
-   POSTGRES_PASSWORD=postgres
-   POSTGRES_DB=tennis
-   ```
-4. Launch PostgreSQL and run migrations/seeds  
-   ```bash
-   docker-compose up -d
-   npm run typeorm migration:run
-   npm run seed:run
-   ```
-5. Start in development mode  
-   ```bash
-   npm run dev
-   ```
-6. Open your browser or API client at  
-   ```
-   http://localhost:3000/api/v1
+   docker compose version
    ```
 
-#### Alternative: Quick Start with Docker Compose
-```bash
-docker compose up --build
-```
-This command builds the images, starts PostgreSQL, runs migrations and seeds, and then starts the API.  
-Then open: `http://localhost:3000/api/v1`
+3. Launch the project  
+   ```bash
+   docker compose up --build
+   ```
 
 ---
 
