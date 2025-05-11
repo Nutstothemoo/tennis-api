@@ -44,12 +44,8 @@ Built with **Node.js**, **TypeScript**, **Express** and **PostgreSQL**, it adher
 
 4. **Error Handling & Logging**  
    - Centralized error middleware.  
-   - Structured logging with libraries like `winston` or `pino`.
 
-5. **Validation**  
-   - Request DTOs + `class-validator` to enforce data integrity.
-
-6. **Versioning**  
+5. **Versioning**  
    - All routes are prefixed with `/api/v1` to enable safe, backwards-compatible changes.
 
 ---
@@ -93,6 +89,13 @@ Built with **Node.js**, **TypeScript**, **Express** and **PostgreSQL**, it adher
    ```
    http://localhost:3000/api/v1
    ```
+
+#### Alternative: Quick Start with Docker Compose
+```bash
+docker compose up --build
+```
+This command builds the images, starts PostgreSQL, runs migrations and seeds, and then starts the API.  
+Then open: `http://localhost:3000/api/v1`
 
 ---
 
@@ -216,4 +219,5 @@ This project is licensed under the **MIT License**. See `LICENSE` for details.
 ## 📬 Contact
 - **Author**: Maxime Dupin  
 - **Email**: maximedupin1992@gmail.com  
-- **GitHub**: [maximedupin](https://github.com/maximedupin)
+- **GitHub**: [maximedupin](https://github.com/maximedupin)  
+- **Production**: For a production-ready build or custom deployment, contact me at maximedupin1992@gmail.com
