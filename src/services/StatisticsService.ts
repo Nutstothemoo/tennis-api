@@ -48,7 +48,7 @@ export class StatisticsService {
     let sumIMC = 0;
     for (const player of players) {
       const heightM = player.height / 100; // conversion cm -> m
-      sumIMC += player.weight / (heightM * heightM);
+      sumIMC += (player.weight/ 1000 ) / (heightM * heightM); // weight in kg, height in m
     }
     return sumIMC / players.length;
   }
