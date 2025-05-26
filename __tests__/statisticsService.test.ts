@@ -10,8 +10,8 @@ describe('StatisticsService', () => {
 
   it('should calculate statistics correctly', () => {
     const mockPlayers = [
-      { height: 180, weight: 75, last: [1, 1, 0], country: { code: 'SRB' } },
-      { height: 175, weight: 70, last: [0, 1, 1], country: { code: 'USA' } },
+      { height: 180, weight: 75000, last: [1, 1, 0], country: { code: 'SRB' } },
+      { height: 175, weight: 70000, last: [0, 1, 1], country: { code: 'USA' } },
     ] as Player[];
 
     const result = statisticsService.calculateStatistics(mockPlayers);

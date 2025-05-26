@@ -57,8 +57,8 @@ describe('PlayerService', () => {
   describe('getStatistics', () => {
     it('should return player statistics', async () => {
       const mockPlayers = [
-        { id: 1, height: 180, weight: 75, last: [1, 1, 0], country: { code: 'SRB' } },
-        { id: 2, height: 175, weight: 70, last: [0, 1, 1], country: { code: 'USA' } },
+        { id: 1, height: 180, weight: 75000, last: [1, 1, 0], country: { code: 'SRB' } },
+        { id: 2, height: 175, weight: 70000, last: [0, 1, 1], country: { code: 'USA' } },
       ] as Player[];
 
       playerRepository.find.mockResolvedValue(mockPlayers);
